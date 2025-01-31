@@ -6,7 +6,6 @@ import Home from "../Components/Home/Home";
 import PopularServices from "../Components/PopularServices/PopularServices";
 import CreateUser from "../Components/Create/CreateUser";
 import UpdateUser from "../Components/UpdateUser/UpdateUser";
-import DeleteUser from "../Components/DeleteUser/DeleteUser";
 import ShowUser from "../Components/ShowUser/ShowUser";
 export const router = createBrowserRouter([
     {
@@ -34,13 +33,13 @@ export const router = createBrowserRouter([
           element:<CreateUser></CreateUser>
         },
         {
-          path:"/updateuser",
+          path:"/updateuser/:id",
           element:<UpdateUser></UpdateUser>
         },
-        {
-          path:"/deleteuser",
-          element:<DeleteUser></DeleteUser>
-        },
+        // {
+        //   path:"/deleteuser",
+        //   element:<DeleteUser></DeleteUser>
+        // },
         {
           path:"/showuser",
           element:<ShowUser></ShowUser>

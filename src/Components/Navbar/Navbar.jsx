@@ -7,7 +7,7 @@ const Navbar = () => {
             <Link to="/popularservices"><li><a>Popular services</a></li></Link>
             <Link to="/create"><li><a>Create</a></li></Link>
             <Link to="/updateuser"><li><a>Update</a></li></Link>
-            <Link to="/deleteuser"><li><a>Delete</a></li></Link>
+            {/* <Link to="/deleteuser"><li><a>Delete</a></li></Link> */}
             <Link to="/showuser"><li><a>Show User Info</a></li></Link>
         </>
     return (
