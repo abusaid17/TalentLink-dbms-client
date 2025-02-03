@@ -1,8 +1,15 @@
+import Web from '../../assets/image/full-stack-web-development-specialization-v2.png.webp'
+import design from '../../assets/image/digital-marketing-specialization-v2.png.webp'
+import seo from '../../assets/image/machine-learning.png.webp'
+import marcketing from '../../assets/image/python.png.webp'
+import software from '../../assets/image/web-development.png.webp'
+import video from '../../assets/image/web-development.png.webp'
+
 const PopularServices = () => {
     return (
         <>
             <div className="flex max-w-96 text-center mx-auto flex-col mt-8">
-                <div className="card bg-base-300 rounded-box grid h-16 text-3xl font-bold  place-items-center">Our Population Service</div>
+                <div className="card bg-base-300 rounded-box grid h-16 text-3xl font-bold  place-items-center">Providing Services</div>
                 <div className="divider"></div>
             </div>
             <div>
@@ -11,8 +18,7 @@ const PopularServices = () => {
                     <div className="card bg-base-100 w-96 shadow-sm">
                         <figure>
                             <img
-                                src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                                alt="Shoes" />
+                                src={Web}/>
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title">
@@ -27,8 +33,7 @@ const PopularServices = () => {
                     <div className="card bg-base-100 w-96 shadow-sm">
                         <figure>
                             <img
-                                src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                                alt="Shoes" />
+                                src={design} />
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title">
@@ -43,8 +48,7 @@ const PopularServices = () => {
                     <div className="card bg-base-100 w-96 shadow-sm">
                         <figure>
                             <img
-                                src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                                alt="Shoes" />
+                                src={seo}/>
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title">
@@ -62,8 +66,7 @@ const PopularServices = () => {
                     <div className="card bg-base-100 w-96 shadow-sm">
                         <figure>
                             <img
-                                src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                                alt="Shoes" />
+                                src={marcketing} />
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title">
@@ -78,8 +81,7 @@ const PopularServices = () => {
                     <div className="card bg-base-100 w-96 shadow-sm">
                         <figure>
                             <img
-                                src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                                alt="Shoes" />
+                                src={software}/>
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title">
@@ -94,8 +96,7 @@ const PopularServices = () => {
                     <div className="card bg-base-100 w-96 shadow-sm">
                         <figure>
                             <img
-                                src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                                alt="Shoes" />
+                                src={video} />
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title">

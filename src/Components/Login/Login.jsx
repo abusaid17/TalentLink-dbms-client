@@ -3,48 +3,75 @@ import image from '../../assets/image/signin.png';
 import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
 import { FcGoogle } from "react-icons/fc";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const { GoogleLogin } = useContext(AuthContext);
-    const { signInUser } = useContext(AuthContext);
+    const navigate = useNavigate();
 
-    const handleSignIn = (e) => {
+    const handleSignIn = async (e) => {
         e.preventDefault();
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email, password)
-        signInUser(email, password)
-            .then(result => {
+
+        try {
+            const response = await fetch("http://localhost:5001/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
                 Swal.fire({
                     title: "Sign In Successful",
                     icon: "success",
                     draggable: true
                 });
-            })
-            .then(error => {
-                console.error(error);
-            })
 
-    }
+                // Store token in localStorage
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("user", JSON.stringify(data.user));
+
+                navigate('/')
+
+                form.reset(); // Clear the form after successful login
+            }
+            //  else {
+            //     Swal.fire({
+            //         icon: "error",
+            //         title: "Oops...",
+            //         text: data.error || "Invalid Credentials",
+            //     });
+            // }
+        } catch (error) {
+            console.error("Login error:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Server Error. Try again later!",
+            });
+        }
+    };
+
     // Google login
     const handleGoogleSignIn = () => {
         GoogleLogin()
             .then(result => {
-                // navigate(location?.state ? location.state : '/');
-                Swal.fire("User Login Successfuly");
+                // Swal.fire("User Logged In Successfully");
+                navigate("/profile")
             })
             .catch(error => {
-                console.log(error.message)
-            })
-    }
+                console.log(error.message);
+            });
+    };
+
     return (
-        <div style={
-            {   
-                backgroundImage: "url(https://i.ibb.co.com/xPz8pk8/lohin.jpg)" ,
-            }
-        } className='bg-bage-100 '>
+        <div style={{ backgroundImage: "url(https://i.ibb.co.com/xPz8pk8/lohin.jpg)" }} className='bg-bage-100 '>
             <div className="hero min-h-screen">
                 <div className="hero-content flex-col lg:flex-row-reverse gap-24">
                     <div className="text-center lg:text-left">
@@ -70,13 +97,12 @@ const Login = () => {
                                 </label>
                                 <input type="password" name="password" placeholder="password" className="input input-bordered" required />
                             </div>
-                            {/* <div className="form-control mt-6"> */}
+
                             <button className="btn btn-primary">Sign In</button>
-                            {/* </div> */}
                         </form>
-                        {/* <div className='mx-auto pb-3'> */}
+
                         <button onClick={handleGoogleSignIn} className='btn btn-success mx-8 mb-3'><FcGoogle className='text-4xl'></FcGoogle> Google </button>
-                        {/* </div> */}
+
                         <div className='text-center pb-6'>
                             <p>Don't Have an Account? <Link to="/register"><span className='text-lg font-bold text-orange-500'>Sign Up</span></Link> </p>
                         </div>

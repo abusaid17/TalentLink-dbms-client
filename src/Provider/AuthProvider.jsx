@@ -44,24 +44,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
-            console.log("User  ",currentUser)
-            
-            // if(currentUser){
-            //     // const userInfo = { email: currentUser.email };  
-            //     axios.post("https://dineflow-server.vercel.app/jwt",{ email: currentUser?.email } )
-                
-            //     .then(res=>{
-            //         if(res?.data?.token){
-                        
-            //             localStorage.setItem("access-token", res?.data?.token)
-            //             setLoading(false);
-            //         }
-            //     }) 
-            // }else {
-            //     localStorage.removeItem('access-token')
-            //     setLoading(false)
-            // }
-                  
+            // console.log("User  ",currentUser)             
             setLoading(false);
         })
         return () => {

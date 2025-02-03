@@ -1,17 +1,20 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import image from '../../assets/image/signup.png'
 import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+// import axios from 'axios';
 const Register = () => {
     const { createUser } = useContext(AuthContext);
-    const handleSignUp = (e) => {
+    // const {registerUser, setRegisterUser} = useState([]);
+    
+    const handleSignUp = async(e) => {
         e.preventDefault();
         const form = e.target;
         const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(name, email, password);
+        // console.log(name, email, password);
 
         createUser(email, password)
             .then(result => {
@@ -28,7 +31,54 @@ const Register = () => {
                     text: "This user already exists",
                 });
             })
+
+
+
+            try {
+                const response = await fetch("http://localhost:5001/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ username: name, email, password }),
+                });
+    
+                const data = await response.json();
+    
+                if (response.ok) {
+                    Swal.fire({
+                        title: "User Created Successfully",
+                        icon: "success",
+                        draggable: true
+                    });
+                    form.reset(); // Clear form fields after success
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: data.error || "Something went wrong",
+                    });
+                }
+            } catch (error) {
+                console.error("Error registering user:", error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Server Error. Try again later!",
+                });
+            }
+
     }
+    // useEffect(()=>{
+    //     axios.get("http://localhost:5001/get_users")
+    //     .then(res => {
+    //         setUser(res.data);
+    //         // console.log(res.data);
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     })
+    // },[])
 
     return (
         <div style={
@@ -65,9 +115,7 @@ const Register = () => {
                                 </label>
                                 <input type="password" name='password' placeholder="password" className="input input-bordered" required />
                             </div>
-                            {/* <div className="form-control mt-6"> */}
                             <button className="btn btn-primary">Sign Up</button>
-                            {/* </div> */}
                             <div className='text-center '>
                                 <p>Have an Account? <Link to="/login"><span className='text-lg font-bold text-orange-500'>Sign In</span></Link> </p>
                             </div>

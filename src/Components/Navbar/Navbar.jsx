@@ -1,14 +1,38 @@
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext)
+
+
+    const handleSignOut = () => {
+
+    }
     const navlinks =
         <>
-            <Link to="/"><li><a>Home</a></li></Link>
-            <Link to="/popularservices"><li><a>Popular services</a></li></Link>
-            <Link to="/create"><li><a>Create</a></li></Link>
-            <Link to="/updateuser"><li><a>Update</a></li></Link>
-            {/* <Link to="/deleteuser"><li><a>Delete</a></li></Link> */}
-            <Link to="/showuser"><li><a>Show User Info</a></li></Link>
+            {
+                user ?
+                    <>
+                        <Link to="/"><li><a>Home</a></li></Link>
+                        <Link to="/create"><li><a>Add User</a></li></Link>
+                        <Link to="/showuser"><li><a>Users</a></li></Link>
+                        <Link to="/addjob"><li><a>Add Job</a></li></Link>
+                        <Link to="/jobopportunity"><li><a>Jobs</a></li></Link>
+                        <Link to="/profile"><li><a>Profile</a></li></Link>
+                    </>
+                    :
+                    <>
+                        <Link to="/"><li><a>Home</a></li></Link>
+                        <Link to="/create"><li><a>Add User</a></li></Link>
+                        <Link to="/showuser"><li><a>Users</a></li></Link>
+                        <Link to="/addjob"><li><a>Add Job</a></li></Link>
+                        <Link to="/jobopportunity"><li><a>Jobs</a></li></Link>
+                    </>
+
+            }
+
+
         </>
     return (
         <div className="navbar bg-base-300">
@@ -34,7 +58,7 @@ const Navbar = () => {
                         {navlinks}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-2xl">TalentLink</a>
+                <p className="text-2xl font-bold border-b-orange-400 border-b-4 rounded-2xl"><span className="text-3xl text-orange-500">T</span>alent <span className="text-3xl text-orange-500">L</span>ink</p>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
@@ -42,8 +66,14 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end gap-2">
-                <Link to="/login"><button className="btn btn-secondary">Sign In</button></Link>
-                <Link to="/register"><button className="btn btn-primary">Sign Up</button></Link>
+                {user ?
+                    <Link onClick={() => logOut()} ><a className="btn btn-accent text-xl">Sign Out</a></Link>
+                    : <>
+                        <Link to="/login"><button className="btn btn-secondary">Sign In</button></Link>
+                        <Link to="/register"><button className="btn btn-primary">Sign Up</button></Link>
+                    </>
+                }
+
             </div>
         </div>
     );

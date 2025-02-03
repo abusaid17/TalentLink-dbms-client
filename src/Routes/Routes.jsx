@@ -7,6 +7,12 @@ import PopularServices from "../Components/PopularServices/PopularServices";
 import CreateUser from "../Components/Create/CreateUser";
 import UpdateUser from "../Components/UpdateUser/UpdateUser";
 import ShowUser from "../Components/ShowUser/ShowUser";
+import JobOpportunity from "../Components/JobOpportunity/JobOpportunity";
+import Profile from "../Components/Profile/Profile";
+import ViewDetails from "../Components/ViewJobDetails/ViewDetails";
+import AddJobForm from "../Components/AddJobForm/AddJobForm";
+import ShowJobForm from "../Components/ViewJobForm/ShowJobForm";
+import JobUpdate from "../Components/JobUpdate/JobUpdate";
 export const router = createBrowserRouter([
     {
       path: "/",
@@ -36,13 +42,33 @@ export const router = createBrowserRouter([
           path:"/updateuser/:id",
           element:<UpdateUser></UpdateUser>
         },
-        // {
-        //   path:"/deleteuser",
-        //   element:<DeleteUser></DeleteUser>
-        // },
         {
           path:"/showuser",
           element:<ShowUser></ShowUser>
+        },
+        {
+          path:"/jobopportunity",
+          element:<JobOpportunity></JobOpportunity>
+        },
+        {
+          path:"/profile",
+          element:<Profile></Profile>
+        },
+        {
+          path:"/viewdetails/:jobId",
+          element:<ViewDetails></ViewDetails>
+        },
+        {
+          path:"/addjob",
+          element:<AddJobForm></AddJobForm>
+        },
+        {
+          path:"/showjob",
+          element:<ShowJobForm></ShowJobForm>
+        },
+        {
+          path:"/update_job/:JobID",
+          element:<JobUpdate></JobUpdate>
         }
       ]
     },

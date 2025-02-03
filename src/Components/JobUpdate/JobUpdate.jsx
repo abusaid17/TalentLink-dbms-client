@@ -1,0 +1,164 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
+const JobUpdate = () => {
+    const { JobID } = useParams();
+    const navigate = useNavigate()
+    const [valus, setValues] = useState([]);
+    // console.log('value  inside value : ', valus)
+
+    useEffect(() => {
+        axios.get(`http://localhost:5001/get_job/${JobID}`)
+            .then(res => {
+                // console.log(res);
+                // setValues({...valus, id: res.data[0].id, name:res.data[0].name,email:res.data[0].email, age:res.data[0].age, gender:res.data[0].gender });  
+                setValues(res.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }, [JobID])
+
+    const handleUpdatejobs = (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const jobData = {
+            Company_Name: form.Company_Name.value,  // Ensure matches DB column
+            JobType: form.JobType.value,  // Ensure matches DB column
+            JobName: form.JobName.value,
+            Location: form.Location.value,
+            Joining_Post: form.Joining_Post.value,  // Change to match "position" in DB
+            Salary: form.Salary.value,
+            Apply_Last_Date: form.Apply_Last_Date.value,
+            JoinDate: form.JoinDate.value,
+            TimeDuration: form.TimeDuration.value,
+            AboutJob: form.AboutJob.value,
+            RequiredSkills: form.RequiredSkills.value,
+            AboutCompany: form.AboutCompany.value,
+            NumberOfOpenings: form.NumberOfOpenings.value
+        };
+        
+        console.log(jobData);
+
+        axios.put(`http://localhost:5001/update_job/${JobID}`, jobData)
+            .then(res => {
+                // console.log(res);
+                console.log("Job Data Sent:", jobData);
+                // navigate('/showuser');
+            })
+            .catch(error => {
+                console.error(error);
+            })
+
+        // form.reset();
+
+    }
+    return (
+        <div>
+            <div className="flex mx-auto mt-2 text-center justify-center items-center">
+                <div className="bg-base-100 w-full max-w-4xl shadow-2xl p-6">
+                    <div className="bg-base-300 text-3xl font-bold text-orange-600 rounded-box grid h-16 place-items-center mb-2">
+                        Create Job Info
+                    </div>
+
+                    <form onSubmit={handleUpdatejobs} className="space-y-4">
+                        {/* First Row */}
+                        <div className="flex gap-4">
+                            <div className="w-1/2">
+                                <label className="fieldset-label">Company Name</label>
+                                <input name="Company_Name" type="text" className="input w-full" placeholder="Company Name"
+                                    defaultValue={valus.Company_Name} required />
+                            </div>
+                            <div className="w-1/2">
+                                <label className="fieldset-label">Job Type</label>
+                                <input name="JobType" type="text" className="input w-full" placeholder="Job Type" defaultValue={valus.JobType
+                                    }
+                                    required />
+                            </div>
+                        </div>
+
+                        {/* Second Row - Added Job Name */}
+                        <div className="flex gap-4">
+                            <div className="w-1/2">
+                                <label className="fieldset-label">Job Name</label>
+                                <input name="JobName" type="text" className="input w-full" placeholder="Job Name" defaultValue={valus.JobName}
+                                    required />
+                            </div>
+                            <div className="w-1/2">
+                                <label className="fieldset-label">Location</label>
+                                <input name="Location" type="text" className="input w-full" placeholder="Location" defaultValue={valus.Location}
+                                    required />
+                            </div>
+                        </div>
+
+                        {/* Third Row */}
+                        <div className="flex gap-4">
+                            <div className="w-1/2">
+                                <label className="fieldset-label">Joining Post</label>
+                                <input name="Joining_Post" type="text" className="input w-full" placeholder="Position" defaultValue={valus.Joining_Post}
+                                    required />
+                            </div>
+                            <div className="w-1/2">
+                                <label className="fieldset-label">Salary</label>
+                                <input name="Salary" type="text" className="input w-full" placeholder="Salary" defaultValue={valus.Salary}
+                                    required />
+                            </div>
+                        </div>
+
+                        {/* Fourth Row */}
+                        <div className="flex gap-4">
+                            <div className="w-1/2">
+                                <label className="fieldset-label">Apply Last Date</label>
+                                <input name="Apply_Last_Date" type="text" className="input w-full" defaultValue={valus.Apply_Last_Date}
+                                    required />
+                            </div>
+                            <div className="w-1/2">
+                                <label className="fieldset-label">Join Date</label>
+                                <input name="JoinDate" type="text" className="input w-full" defaultValue={valus.JoinDate}
+                                    required />
+                            </div>
+                        </div>
+
+                        {/* Fifth Row */}
+                        <div className="flex gap-4">
+                            <div className="w-1/2">
+                                <label className="fieldset-label">Time Duration (months)</label>
+                                <input name="TimeDuration" type="number" className="input w-full" defaultValue={valus.TimeDuration}
+                                    placeholder="Time Duration"  />
+                            </div>
+                            <div className="w-1/2">
+                                <label className="fieldset-label">Number of Openings</label>
+                                <input name="NumberOfOpenings" type="number" className="input w-full" placeholder="Number of Openings" defaultValue={valus.NumberOfOpenings}
+                                    required />
+                            </div>
+                        </div>
+
+                        {/* Larger Text Areas for About Job & Required Skills */}
+                        <div className="flex flex-col gap-4">
+                            <div>
+                                <label className="fieldset-label">About Job</label>
+                                <textarea name="AboutJob" className="textarea w-full h-20" placeholder="Describe the job in detail..." defaultValue={valus.AboutJob}
+                                    required></textarea>
+                            </div>
+                            <div>
+                                <label className="fieldset-label">Required Skills</label>
+                                <textarea name="RequiredSkills" className="textarea w-full h-20" placeholder="List the required skills..." defaultValue={valus.RequiredSkills}
+                                    required></textarea>
+                            </div>
+                            <div>
+                                <label className="fieldset-label">About Company</label>
+                                <textarea name="AboutCompany" className="textarea w-full h-20" placeholder="Describe the company..." defaultValue={valus.AboutCompany}
+                                    required></textarea>
+                            </div>
+                        </div>
+
+                        <button className="btn btn-neutral mt-4 w-full">Update Job Details</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default JobUpdate;
