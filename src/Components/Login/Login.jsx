@@ -6,7 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const { GoogleLogin } = useContext(AuthContext);
+    const { GoogleLogin, signInUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleSignIn = async (e) => {
@@ -14,50 +14,50 @@ const Login = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
+        // const loginInfo = { email, password }
+        signInUser(email, password)
+            .then(async res => {
+                if (res) {
+                    try {
+                        // const response = await fetch("http://localhost:5001/login", {
+                        //     method: "POST",
+                        //     headers: {
+                        //         "Content-Type": "application/json",
+                        //     },
+                        //     body: JSON.stringify({ email, password }),
+                        // });
+                        // const data = await response.json();
+                        if (res) {
 
-        try {
-            const response = await fetch("http://localhost:5001/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email, password }),
-            });
+                            Swal.fire({
+                                title: "Sign In Successful",
+                                icon: "success",
+                                draggable: true
+                            });
+                            // // Store token in localStorage
+                            // localStorage.setItem("token", data.token);
+                            // localStorage.setItem("user", JSON.stringify(data.user));
 
-            const data = await response.json();
+                            navigate('/');
 
-            if (response.ok) {
-                Swal.fire({
-                    title: "Sign In Successful",
-                    icon: "success",
-                    draggable: true
-                });
+                            form.reset(); // Clear the form after successful login
+                        }
 
-                // Store token in localStorage
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("user", JSON.stringify(data.user));
+                    } catch (error) {
+                        console.error("Login error:", error);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Server Error. Try again later!",
+                        });
+                    }
+                }
+            })
+            .catch(err => {
+                console.log("login: ", err)
+            })
 
-                navigate('/')
-
-                form.reset(); // Clear the form after successful login
-            }
-            //  else {
-            //     Swal.fire({
-            //         icon: "error",
-            //         title: "Oops...",
-            //         text: data.error || "Invalid Credentials",
-            //     });
-            // }
-        } catch (error) {
-            console.error("Login error:", error);
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Server Error. Try again later!",
-            });
-        }
     };
-
     // Google login
     const handleGoogleSignIn = () => {
         GoogleLogin()
@@ -97,12 +97,9 @@ const Login = () => {
                                 </label>
                                 <input type="password" name="password" placeholder="password" className="input input-bordered" required />
                             </div>
-
                             <button className="btn btn-primary">Sign In</button>
                         </form>
-
                         <button onClick={handleGoogleSignIn} className='btn btn-success mx-8 mb-3'><FcGoogle className='text-4xl'></FcGoogle> Google </button>
-
                         <div className='text-center pb-6'>
                             <p>Don't Have an Account? <Link to="/register"><span className='text-lg font-bold text-orange-500'>Sign Up</span></Link> </p>
                         </div>

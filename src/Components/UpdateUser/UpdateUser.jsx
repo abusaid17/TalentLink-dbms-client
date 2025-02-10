@@ -8,7 +8,6 @@ const UpdateUser = () => {
     const [valus, setValues] = useState([])
 
     console.log("params id : ", id)
-
     useEffect(() => {
         axios.get(`http://localhost:5001/get_user/${id}`)
             .then(res => {
@@ -20,9 +19,7 @@ const UpdateUser = () => {
                 console.log(error);
             })
     }, [id])
-
     console.log("user value array:  ", valus)
-
 
     const handleUpdateUser = (event) => {
         event.preventDefault();
@@ -43,7 +40,6 @@ const UpdateUser = () => {
             .catch(error => {
                 console.error(error);
             })
-
     }
 
     return (

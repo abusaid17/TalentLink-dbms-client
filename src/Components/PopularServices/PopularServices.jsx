@@ -18,7 +18,7 @@ const PopularServices = () => {
                     <div className="card bg-base-100 w-96 shadow-sm">
                         <figure>
                             <img
-                                src={Web}/>
+                                src={Web} />
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title">
@@ -48,7 +48,7 @@ const PopularServices = () => {
                     <div className="card bg-base-100 w-96 shadow-sm">
                         <figure>
                             <img
-                                src={seo}/>
+                                src={seo} />
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title">
@@ -81,7 +81,7 @@ const PopularServices = () => {
                     <div className="card bg-base-100 w-96 shadow-sm">
                         <figure>
                             <img
-                                src={software}/>
+                                src={software} />
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title">

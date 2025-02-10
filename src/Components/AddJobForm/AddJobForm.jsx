@@ -1,7 +1,12 @@
 import axios from "axios";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const CreateUser = () => {
+    const {user} = useContext(AuthContext);
+
     const navigate = useNavigate()
     const handleCreateJob = (e) => {
         e.preventDefault();
@@ -19,13 +24,14 @@ const CreateUser = () => {
         const aboutJob = form.AboutJob.value;
         const requiredSkills = form.RequiredSkills.value;
         const aboutCompany = form.AboutCompany.value;
-        const jobData = { companyName, jobType, jobName, location, Joining_Post, salary, applyLastDate, joinDate, timeDuration, numberOfOpenings, aboutJob, requiredSkills, aboutCompany }
-        console.log(jobData);
+        const userMail = user?.email
+        const jobData = { companyName, jobType, jobName, location, Joining_Post, salary, applyLastDate, joinDate, timeDuration, numberOfOpenings, aboutJob, requiredSkills, aboutCompany,userMail }
 
         axios.post("http://localhost:5001/add_job", jobData)
             .then(res => {
                 console.log(res);
-                navigate('/showjob');  // Redirecting after submission
+                toast.success("Jobs Offer Created Successfully");
+                // navigate('/showjob');  // Redirecting after submission
             })
             .catch(err => {
                 console.log(err);
@@ -35,13 +41,12 @@ const CreateUser = () => {
     };
 
     return (
-        <div className="flex mx-auto text-center justify-center items-center mb-2">
-            <div className="bg-base-100 w-full max-w-4xl shadow-2xl p-6 ">
+        <div style={{ backgroundImage: "url(https://i.ibb.co.com/hFsh3vXM/post.jpg)" }} className="flex mx-auto text-center justify-center items-center">
+            <div className="bg-base-100 w-full max-w-4xl shadow-2xl p-6 my-6 rounded-2xl">
                 <div className="bg-base-300 text-3xl font-bold text-orange-600 rounded-box grid h-16 place-items-center mb-2">
-                    Create Job Info
+                    Post Your Job Info
                 </div>
-
-                <form onSubmit={handleCreateJob} className="space-y-4 ">
+                <form onSubmit={handleCreateJob} className="space-y-4">
                     {/* First Row */}
                     <div className="flex gap-4">
                         <div className="w-1/2">
@@ -53,7 +58,6 @@ const CreateUser = () => {
                             <input name="Job_Type" type="text" className="input w-full" placeholder="Job Type" required />
                         </div>
                     </div>
-
                     {/* Second Row - Added Job Name */}
                     <div className="flex gap-4">
                         <div className="w-1/2">
@@ -65,7 +69,6 @@ const CreateUser = () => {
                             <input name="Location" type="text" className="input w-full" placeholder="Location" required />
                         </div>
                     </div>
-
                     {/* Third Row */}
                     <div className="flex gap-4">
                         <div className="w-1/2">
@@ -77,7 +80,6 @@ const CreateUser = () => {
                             <input name="Salary" type="text" className="input w-full" placeholder="Salary" required />
                         </div>
                     </div>
-
                     {/* Fourth Row */}
                     <div className="flex gap-4">
                         <div className="w-1/2">
@@ -89,7 +91,6 @@ const CreateUser = () => {
                             <input name="Join_Date" type="date" className="input w-full" required />
                         </div>
                     </div>
-
                     {/* Fifth Row */}
                     <div className="flex gap-4">
                         <div className="w-1/2">
@@ -101,7 +102,6 @@ const CreateUser = () => {
                             <input name="NumberOfOpenings" type="number" className="input w-full" placeholder="Number of Openings" required />
                         </div>
                     </div>
-
                     {/* Larger Text Areas for About Job & Required Skills */}
                     <div className="flex flex-col gap-4">
                         <div>
@@ -117,10 +117,10 @@ const CreateUser = () => {
                             <textarea name="AboutCompany" className="textarea w-full h-12" placeholder="Describe the company..." required></textarea>
                         </div>
                     </div>
-
-                    <button className="btn btn-outline mt-4 w-full text-lg">Create New Job</button>
+                    <button className="btn btn-success mt-4 w-full text-lg">Offer New Job</button>
                 </form>
             </div>
+            <ToastContainer></ToastContainer>
         </div>
 
 

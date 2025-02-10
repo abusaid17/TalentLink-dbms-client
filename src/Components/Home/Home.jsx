@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import PopularServices from "../PopularServices/PopularServices";
 
-
 const Home = () => {
     return (
         <div>
@@ -13,10 +12,9 @@ const Home = () => {
                 <div className="hero-overlay"></div>
                 <div className="hero-content text-neutral-content text-center">
                     <div className="max-w-md">
-                        <h1 className="mb-5 text-5xl font-bold">We are Hairing</h1>
+                        <h1 className="mb-5 text-5xl font-bold">Welcome to TalentLink</h1>
                         <p className="mb-5">
-                            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-                            quasi. In deleniti eaque aut repudiandae et a id nisi.
+                        A job marketplace designed for newcomers. Connect with employers, find opportunities, and kickstart your career with ease.
                         </p>
                         <div className="text-black pb-3">
                             <label className="input bg-blue-300">
@@ -24,7 +22,7 @@ const Home = () => {
                                 <input type="search" required placeholder="Search any service" />
                             </label>
                         </div>
-                        <Link to="/register"><button className="btn btn-info">Sign Up</button></Link>
+                        {/* <Link to="/register"><button className="btn btn-info">Sign Up</button></Link> */}
                     </div>
                 </div>
             </div>

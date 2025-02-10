@@ -13,63 +13,68 @@ import ViewDetails from "../Components/ViewJobDetails/ViewDetails";
 import AddJobForm from "../Components/AddJobForm/AddJobForm";
 import ShowJobForm from "../Components/ViewJobForm/ShowJobForm";
 import JobUpdate from "../Components/JobUpdate/JobUpdate";
+import University from "../Components/Univrsity/University";
 export const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <MainLayout />,
-      children: [
-        {
-          path: "/",
-          element: <Home />,
-        },
-        {
-          path: "/popularservices",
-          element:<PopularServices></PopularServices>
-        },
-        {
-          path:"/login",
-          element:<Login></Login>
-        },
-        {
-          path:"/register",
-          element:<Register></Register>
-        },
-        {
-          path: "/create",
-          element:<CreateUser></CreateUser>
-        },
-        {
-          path:"/updateuser/:id",
-          element:<UpdateUser></UpdateUser>
-        },
-        {
-          path:"/showuser",
-          element:<ShowUser></ShowUser>
-        },
-        {
-          path:"/jobopportunity",
-          element:<JobOpportunity></JobOpportunity>
-        },
-        {
-          path:"/profile",
-          element:<Profile></Profile>
-        },
-        {
-          path:"/viewdetails/:jobId",
-          element:<ViewDetails></ViewDetails>
-        },
-        {
-          path:"/addjob",
-          element:<AddJobForm></AddJobForm>
-        },
-        {
-          path:"/showjob",
-          element:<ShowJobForm></ShowJobForm>
-        },
-        {
-          path:"/update_job/:JobID",
-          element:<JobUpdate></JobUpdate>
-        }
-      ]
-    },
-  ]);
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/popularservices",
+        element: <PopularServices></PopularServices>
+      },
+      {
+        path: "/login",
+        element: <Login></Login>
+      },
+      {
+        path: "/register",
+        element: <Register></Register>
+      },
+      {
+        path: "/create",
+        element: <CreateUser></CreateUser>
+      },
+      {
+        path: "/updateuser/:id",
+        element: <UpdateUser></UpdateUser>
+      },
+      {
+        path: "/showuser",
+        element: <ShowUser></ShowUser>
+      },
+      {
+        path: "/jobopportunity",
+        element: <JobOpportunity></JobOpportunity>
+      },
+      {
+        path: "/profile",
+        element: <Profile></Profile>
+      },
+      {
+        path: "/viewdetails/:jobId",
+        element: <ViewDetails></ViewDetails>
+      },
+      {
+        path: "/addjob",
+        element: <AddJobForm></AddJobForm>
+      },
+      {
+        path: "/showjob",
+        element: <ShowJobForm></ShowJobForm>
+      },
+      {
+        path: "/update_job/:JobID",
+        element: <JobUpdate></JobUpdate>
+      },
+      {
+        path:"/university",
+        element:<University></University>
+      }
+    ]
+  },
+]);

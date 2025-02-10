@@ -1,37 +1,47 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
+import axios from "axios";
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext)
+    const [userdata, setUserData] = useState([])
+    useEffect(() => {
+        axios.get(`http://localhost:5001/get_user/${user?.email}`)
+            .then((res) => {
+                setUserData(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }, [user])
 
-
-    const handleSignOut = () => {
-
-    }
     const navlinks =
         <>
+            <Link to="/"><li><a>Home</a></li></Link>
+            <Link to="/jobopportunity"><li><a>Jobs</a></li></Link>
+            <Link to="/addjob"><li><a>Post Job</a></li></Link>
             {
                 user ?
                     <>
-                        <Link to="/"><li><a>Home</a></li></Link>
-                        <Link to="/create"><li><a>Add User</a></li></Link>
-                        <Link to="/showuser"><li><a>Users</a></li></Link>
-                        <Link to="/addjob"><li><a>Add Job</a></li></Link>
-                        <Link to="/jobopportunity"><li><a>Jobs</a></li></Link>
                         <Link to="/profile"><li><a>Profile</a></li></Link>
+                        {
+                            userdata?.role === "Admin" ?
+                                <>
+                                    <Link to="/showuser"><li><a>Users</a></li></Link>
+                                </>
+                                :
+                                <>
+                                </>
+                        }
+
                     </>
                     :
                     <>
-                        <Link to="/"><li><a>Home</a></li></Link>
-                        <Link to="/create"><li><a>Add User</a></li></Link>
-                        <Link to="/showuser"><li><a>Users</a></li></Link>
-                        <Link to="/addjob"><li><a>Add Job</a></li></Link>
-                        <Link to="/jobopportunity"><li><a>Jobs</a></li></Link>
+
                     </>
 
             }
-
 
         </>
     return (
@@ -58,7 +68,7 @@ const Navbar = () => {
                         {navlinks}
                     </ul>
                 </div>
-                <p className="text-2xl font-bold border-b-orange-400 border-b-4 rounded-2xl"><span className="text-3xl text-orange-500">T</span>alent <span className="text-3xl text-orange-500">L</span>ink</p>
+                <p className="text-2xl font-bold rounded-2xl"><span className="text-3xl text-orange-500">T</span>alent <span className="text-3xl text-orange-500">L</span>ink</p>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
@@ -67,7 +77,7 @@ const Navbar = () => {
             </div>
             <div className="navbar-end gap-2">
                 {user ?
-                    <Link onClick={() => logOut()} ><a className="btn btn-accent text-xl">Sign Out</a></Link>
+                    <Link onClick={() => logOut()} ><a className="btn btn-error text-lg">Sign Out</a></Link>
                     : <>
                         <Link to="/login"><button className="btn btn-secondary">Sign In</button></Link>
                         <Link to="/register"><button className="btn btn-primary">Sign Up</button></Link>

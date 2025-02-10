@@ -43,8 +43,8 @@ const CreateUser = () => {
                             <input name="id" type="number" className="input" placeholder="Id" />
                         </div> */}
                         <div>
-                            <label className="fieldset-label">Name</label>
-                            <input name="name" type="text" className="input" placeholder="Name" required />
+                            <label className="fieldset-label">User name</label>
+                            <input name="name" type="text" className="input" placeholder="User name" required />
                         </div>
                         <div>
                             <label className="fieldset-label">Email</label>

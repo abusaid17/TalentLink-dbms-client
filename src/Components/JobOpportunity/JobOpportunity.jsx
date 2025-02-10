@@ -1,49 +1,71 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { FaBangladeshiTakaSign, FaLocationDot } from "react-icons/fa6";
-import { FiEdit } from "react-icons/fi";
-import { MdAutoDelete } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
-import { TbCoinTakaFilled } from "react-icons/tb";
-
-
-
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../Provider/AuthProvider";
+import JobShow from "./JobShow";
 
 const JobOpportunity = () => {
-
+    const { user } = useContext(AuthContext);
     const [JobOpportunity, setJobOpportunity] = useState([]);
     const navigate = useNavigate();  // Initialize useNavigate
-
+    const [setUserData] = useState([]);
+    const [adminCheck, setadminCheck] = useState(false)
 
     useEffect(() => {
         axios.get("http://localhost:5001/jobopportunities")
             .then(res => {
                 setJobOpportunity(res.data);
-                // console.log(res.data);
             })
             .catch(err => {
                 console.log(err);
             })
     }, [])
 
+    useEffect(() => {
+        axios.get(`http://localhost:5001/get_user/${user?.email}`)
+            .then((res) => {
+                setUserData(res.data)
+                if (res.data?.role === "Admin") {
+                    setadminCheck(true)
+                } else {
+                    setadminCheck(false)
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }, [user])
     const handleViewDetails = (jobId) => {
         navigate(`/viewdetails/${jobId}`);  // Navigate to the ViewDetails page with the jobId
     };
-
     const handleDelete = (JobID) => {
 
-        axios.delete(`http://localhost:5001/delete_job/${JobID}`)
-            .then(res => {
-                location.reload();
-                console.log('inside delete func ', res.data)
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to Delete this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:5001/delete_job/${JobID}`)
+                    .then(res => {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        });
+                        location.reload();
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+        });
     }
-
-
-
 
     return (
         <div className="py-6 bg-gray-300">
@@ -52,26 +74,14 @@ const JobOpportunity = () => {
             <div className="mx-auto flex pt-2">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-4 ">
                     {JobOpportunity.map((job) =>
-                        <div key={job.id} className="card bg-base-200 w-full">
-                            <div className="card-body">
-                                <p className="font-bold">Company : {job.Company_Name}</p>
-                                <p className="flex gap-2 items-center"><FaLocationDot /> {job.Location}</p>
-                                <p>Join as a : {job.Joining_Post}</p>
-                                <p>Name of job : {job.JobName}</p>
-                                <p><span className="font-bold">Abou Job :</span> {job.AboutJob}</p>
-                                <p className="flex gap-2 items-center"><TbCoinTakaFilled className="text-2xl"/> {job.Salary} BDT</p>
-                            </div>
-                            <p className="text-end mb-3 mr-4"><Link to={`/update_job/${job.JobID}`}><button className="btn btn-secondary text-2xl"><FiEdit />
-                            </button></Link></p>
-                            <div className="text-end mr-4 mb-2">
-                                <button onClick={() => handleDelete(job.JobID)} className="btn text-orange-500 text-2xl"><MdAutoDelete /></button>
-                            </div>
-                            <button
-                                onClick={() => handleViewDetails(job.JobID)}
-                                className="btn btn-end btn-accent text-black text-lg font-bold">
-                                View Details
-                            </button>
-                        </div>
+                        <JobShow
+                            key={job.id}
+                            job={job}
+                            email={user?.email}
+                            Admin={adminCheck}
+                            handleDelete={handleDelete}
+                            handleViewDetails={handleViewDetails}
+                        ></JobShow>
                     )}
                 </div>
             </div>

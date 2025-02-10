@@ -1,18 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const JobUpdate = () => {
     const { JobID } = useParams();
     const navigate = useNavigate()
     const [valus, setValues] = useState([]);
-    // console.log('value  inside value : ', valus)
 
     useEffect(() => {
         axios.get(`http://localhost:5001/get_job/${JobID}`)
             .then(res => {
-                // console.log(res);
-                // setValues({...valus, id: res.data[0].id, name:res.data[0].name,email:res.data[0].email, age:res.data[0].age, gender:res.data[0].gender });  
                 setValues(res.data);
             })
             .catch(error => {
@@ -38,30 +36,26 @@ const JobUpdate = () => {
             AboutCompany: form.AboutCompany.value,
             NumberOfOpenings: form.NumberOfOpenings.value
         };
-        
-        console.log(jobData);
 
         axios.put(`http://localhost:5001/update_job/${JobID}`, jobData)
             .then(res => {
                 // console.log(res);
                 console.log("Job Data Sent:", jobData);
+                toast.success("Job Info Updated succesfully");
                 // navigate('/showuser');
             })
             .catch(error => {
                 console.error(error);
             })
-
         // form.reset();
-
     }
     return (
         <div>
             <div className="flex mx-auto mt-2 text-center justify-center items-center">
                 <div className="bg-base-100 w-full max-w-4xl shadow-2xl p-6">
                     <div className="bg-base-300 text-3xl font-bold text-orange-600 rounded-box grid h-16 place-items-center mb-2">
-                        Create Job Info
+                        Update Job Info
                     </div>
-
                     <form onSubmit={handleUpdatejobs} className="space-y-4">
                         {/* First Row */}
                         <div className="flex gap-4">
@@ -73,11 +67,10 @@ const JobUpdate = () => {
                             <div className="w-1/2">
                                 <label className="fieldset-label">Job Type</label>
                                 <input name="JobType" type="text" className="input w-full" placeholder="Job Type" defaultValue={valus.JobType
-                                    }
+                                }
                                     required />
                             </div>
                         </div>
-
                         {/* Second Row - Added Job Name */}
                         <div className="flex gap-4">
                             <div className="w-1/2">
@@ -91,7 +84,6 @@ const JobUpdate = () => {
                                     required />
                             </div>
                         </div>
-
                         {/* Third Row */}
                         <div className="flex gap-4">
                             <div className="w-1/2">
@@ -105,7 +97,6 @@ const JobUpdate = () => {
                                     required />
                             </div>
                         </div>
-
                         {/* Fourth Row */}
                         <div className="flex gap-4">
                             <div className="w-1/2">
@@ -119,13 +110,12 @@ const JobUpdate = () => {
                                     required />
                             </div>
                         </div>
-
                         {/* Fifth Row */}
                         <div className="flex gap-4">
                             <div className="w-1/2">
                                 <label className="fieldset-label">Time Duration (months)</label>
                                 <input name="TimeDuration" type="number" className="input w-full" defaultValue={valus.TimeDuration}
-                                    placeholder="Time Duration"  />
+                                    placeholder="Time Duration" />
                             </div>
                             <div className="w-1/2">
                                 <label className="fieldset-label">Number of Openings</label>
@@ -133,7 +123,6 @@ const JobUpdate = () => {
                                     required />
                             </div>
                         </div>
-
                         {/* Larger Text Areas for About Job & Required Skills */}
                         <div className="flex flex-col gap-4">
                             <div>
@@ -152,11 +141,11 @@ const JobUpdate = () => {
                                     required></textarea>
                             </div>
                         </div>
-
                         <button className="btn btn-neutral mt-4 w-full">Update Job Details</button>
                     </form>
                 </div>
             </div>
+            <ToastContainer></ToastContainer>
         </div>
     );
 };
