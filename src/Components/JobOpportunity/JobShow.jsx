@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const JobShow = ({ job, email, Admin, handleDelete, handleViewDetails }) => {
 
-    const isButtonEnabled = Admin === true || email === job?.userMail;
+    const isButtonDisabled = !(Admin || email === job?.userMail);
 
     return (
         <div>
@@ -15,22 +15,22 @@ const JobShow = ({ job, email, Admin, handleDelete, handleViewDetails }) => {
                 <div className="card-body">
                     <p className="font-bold">Company : {job.Company_Name}</p>
                     <p className="flex gap-2 items-center"><FaLocationDot /> {job.Location}</p>
-                    <p>Join as a : {job.Joining_Post}</p>
-                    <p>Name of job : {job.JobName}</p>
+                    <p><span className='font-semibold'>👤 Role : </span> {job.Joining_Post}</p>
+                    <p className='text-lg font-semibold'>💼 Position Title : {job.JobName}</p>
                     <p><span className="font-bold">About Job :</span> {job.AboutJob}</p>
                     <p className="flex gap-2 items-center"><TbCoinTakaFilled className="text-2xl" /> {job.Salary} BDT</p>
                 </div>
                 <Link className="text-right mr-4 mb-3" to={`/update_job/${job.JobID}`}>
-                    <button disabled={isButtonEnabled} className="btn btn-accent text-2xl"><FiEdit />
+                    <button disabled={isButtonDisabled} className="btn btn-accent text-2xl"><FiEdit />
                     </button></Link>
                 <div className="text-end mr-4 mb-2">
-                    <button disabled={isButtonEnabled} onClick={() => handleDelete(job.JobID)} className="btn btn-error text-2xl"><MdAutoDelete /></button>
+                    <button disabled={isButtonDisabled} onClick={() => handleDelete(job.JobID)} className="btn btn-error text-2xl"><MdAutoDelete /></button>
                 </div>
-                <button
+                {email && <button
                     onClick={() => handleViewDetails(job.JobID)}
                     className="btn btn-end btn-accent text-black text-lg font-bold">
                     View Details
-                </button>
+                </button>}
             </div>
         </div>
     );

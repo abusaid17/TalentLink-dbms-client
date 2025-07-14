@@ -1,49 +1,58 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
 import JobShow from "./JobShow";
 
 const JobOpportunity = () => {
     const { user } = useContext(AuthContext);
-    const [JobOpportunity, setJobOpportunity] = useState([]);
-    const navigate = useNavigate();  // Initialize useNavigate
+    const [jobOpportunity, setJobOpportunity] = useState([]);
+    const navigate = useNavigate();
     const [setUserData] = useState([]);
-    const [adminCheck, setadminCheck] = useState(false)
+    const [adminCheck, setAdminCheck] = useState(false);
+    const { searchQuery } = useParams();
 
     useEffect(() => {
         axios.get("http://localhost:5001/jobopportunities")
             .then(res => {
-                setJobOpportunity(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }, [])
-
-    useEffect(() => {
-        axios.get(`http://localhost:5001/get_user/${user?.email}`)
-            .then((res) => {
-                setUserData(res.data)
-                if (res.data?.role === "Admin") {
-                    setadminCheck(true)
+                if (searchQuery) {
+                    const filteredJobs = res.data.filter(job =>
+                        job.JobName.toLowerCase().includes(searchQuery.toLowerCase())
+                    );
+                    setJobOpportunity(filteredJobs);
+                    if (filteredJobs.length === 0) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'This type of job is not found!',
+                        });
+                    }
                 } else {
-                    setadminCheck(false)
+                    setJobOpportunity(res.data);
                 }
             })
             .catch(err => {
-                console.log(err)
-            })
-    }, [user])
-    const handleViewDetails = (jobId) => {
-        navigate(`/viewdetails/${jobId}`);  // Navigate to the ViewDetails page with the jobId
-    };
-    const handleDelete = (JobID) => {
+                console.log(err);
+            });
+    }, [searchQuery]);
 
+    useEffect(() => {
+        if (user?.email === "mdabusaid7068@gmail.com") {
+            setAdminCheck(true);
+        } else {
+            setAdminCheck(false);
+        }
+    }, [user]);
+
+    const handleViewDetails = (jobId) => {
+        navigate(`/viewdetails/${jobId}`);
+    };
+
+    const handleDelete = (JobID) => {
         Swal.fire({
             title: "Are you sure?",
-            text: "You want to Delete this!",
+            text: "You want to delete this!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -52,20 +61,20 @@ const JobOpportunity = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 axios.delete(`http://localhost:5001/delete_job/${JobID}`)
-                    .then(res => {
+                    .then(() => {
                         Swal.fire({
                             title: "Deleted!",
-                            text: "Your file has been deleted.",
+                            text: "The job has been deleted.",
                             icon: "success"
                         });
-                        location.reload();
+                        setJobOpportunity(jobOpportunity.filter(job => job.JobID !== JobID));
                     })
                     .catch(err => {
                         console.log(err);
-                    })
+                    });
             }
         });
-    }
+    };
 
     return (
         <div className="py-6 bg-gray-300">
@@ -73,7 +82,7 @@ const JobOpportunity = () => {
             <p className="text-center py-4">Find the right job for your skills. Choose from the jobs listed below and apply to unlock new opportunities! 🚀</p>
             <div className="mx-auto flex pt-2">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-4 ">
-                    {JobOpportunity.map((job) =>
+                    {jobOpportunity.map((job) =>
                         <JobShow
                             key={job.id}
                             job={job}
@@ -81,7 +90,7 @@ const JobOpportunity = () => {
                             Admin={adminCheck}
                             handleDelete={handleDelete}
                             handleViewDetails={handleViewDetails}
-                        ></JobShow>
+                        />
                     )}
                 </div>
             </div>

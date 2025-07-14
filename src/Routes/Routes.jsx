@@ -52,6 +52,10 @@ export const router = createBrowserRouter([
         element: <JobOpportunity></JobOpportunity>
       },
       {
+        path: "/jobopportunity/:searchQuery",
+        element: <JobOpportunity></JobOpportunity>
+      },
+      {
         path: "/profile",
         element: <Profile></Profile>
       },
