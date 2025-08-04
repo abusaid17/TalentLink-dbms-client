@@ -58,7 +58,7 @@ Thank you for considering my application. I look forward to the possibility of c
                 </div>
 
                 <div className="flex text-end pb-8 mx-8">
-                    <Link to="/jobopportunity"><button className="btn btn-secondary mx-4">Back Jobs</button></Link>
+                    <Link to="/jobopportunity"><button className="btn btn-secondary mx-4">Go Back </button></Link>
                     <button onClick={handleApplyNow} className="btn btn-success text-black" disabled={applied}>
                         {applied ? "Applied" : "Apply Now"}
                     </button>

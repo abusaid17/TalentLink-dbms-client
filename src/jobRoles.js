@@ -1,0 +1,22 @@
+export const jobRoles = [
+    { value: 'Web Developer', label: 'Web Developer' },
+    { value: 'Front-end Developer', label: 'Front-end Developer' },
+    { value: 'Full-stack Developer', label: 'Full-stack Developer' },
+    { value: 'MERN-stack Developer', label: 'MERN-stack Developer' },
+    { value: 'UI/UX Designer', label: 'UI/UX Designer' },
+    { value: 'Digital Marketing', label: 'Digital Marketing' },
+    { value: 'Data Scientist', label: 'Data Scientist' },
+    { value: 'SEO Marketing', label: 'SEO Marketing' },
+    { value: 'Php Developer', label: 'Php Developer' },
+    { value: 'WordPress Developer', label: 'WordPress Developer' },
+    { value: 'App Developer', label: 'App Developer' },
+    { value: 'Game Developer', label: 'Game Developer' },
+    { value: 'Software Engineer', label: 'Software Engineer' },
+    { value: 'DevOps Engineer', label: 'DevOps Engineer' },
+    { value: 'System Administrator', label: 'System Administrator' },
+    { value: 'Network Engineer', label: 'Network Engineer' },
+    { value: 'Cybersecurity Analyst', label: 'Cybersecurity Analyst' },
+    { value: 'Cloud Engineer', label: 'Cloud Engineer' },
+    { value: 'IT Support Specialist', label: 'IT Support Specialist' },
+    { value: 'Database Administrator', label: 'Database Administrator' }
+];

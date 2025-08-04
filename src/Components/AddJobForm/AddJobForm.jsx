@@ -3,9 +3,10 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { jobRoles } from "../../jobRoles";
 
 const CreateUser = () => {
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     const navigate = useNavigate()
     const handleCreateJob = (e) => {
@@ -25,7 +26,7 @@ const CreateUser = () => {
         const requiredSkills = form.RequiredSkills.value;
         const aboutCompany = form.AboutCompany.value;
         const userMail = user?.email
-        const jobData = { companyName, jobType, jobName, location, Joining_Post, salary, applyLastDate, joinDate, timeDuration, numberOfOpenings, aboutJob, requiredSkills, aboutCompany,userMail }
+        const jobData = { companyName, jobType, jobName, location, Joining_Post, salary, applyLastDate, joinDate, timeDuration, numberOfOpenings, aboutJob, requiredSkills, aboutCompany, userMail }
 
         axios.post("http://localhost:5001/add_job", jobData)
             .then(res => {
@@ -55,14 +56,24 @@ const CreateUser = () => {
                         </div>
                         <div className="w-1/2">
                             <label className="fieldset-label">Job Type</label>
-                            <input name="Job_Type" type="text" className="input w-full" placeholder="Job Type" required />
+                            <select name="Job_Type" className="input w-full" required>
+                                <option value="">Select Job Type</option>
+                                <option value="On-site">On-site</option>
+                                <option value="Remote">Remote</option>
+                                <option value="Hybrid">Hybrid</option>
+                            </select>
                         </div>
                     </div>
                     {/* Second Row - Added Job Name */}
                     <div className="flex gap-4">
                         <div className="w-1/2">
                             <label className="fieldset-label">Job Name</label>
-                            <input name="Job_Name" type="text" className="input w-full" placeholder="Job Name" required />
+                            <select name="Job_Name" className="input w-full" required>
+                                <option value="">Select Job Name</option>
+                                {jobRoles.map(role => (
+                                    <option key={role.value} value={role.value}>{role.label}</option>
+                                ))}
+                            </select>
                         </div>
                         <div className="w-1/2">
                             <label className="fieldset-label">Location</label>
