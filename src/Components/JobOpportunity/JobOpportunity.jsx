@@ -6,42 +6,53 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import JobShow from "./JobShow";
 import { jobRoles } from "../../jobRoles";
 
-
 const JobOpportunity = () => {
     const { user } = useContext(AuthContext);
     const [jobOpportunity, setJobOpportunity] = useState([]);
     const navigate = useNavigate();
-    const [setUserData] = useState([]);
     const [adminCheck, setAdminCheck] = useState(false);
     const { jobNameQuery } = useParams();
     const [selectedJob, setSelectedJob] = useState("");
+    const [selectedJobType, setSelectedJobType] = useState("");
+    const [salarySort, setSalarySort] = useState("");
 
     useEffect(() => {
         axios.get("http://localhost:5001/jobopportunities")
             .then(res => {
+                let filteredJobs = res.data;
+
                 if (jobNameQuery) {
                     const normalizedQuery = jobNameQuery.toLowerCase().replace(/\s+/g, '');
-                    const filteredJobs = res.data.filter(job =>
-                        job.jobName && job.jobName.toLowerCase().replace(/\s+/g, '') === normalizedQuery
+                    filteredJobs = filteredJobs.filter(job =>
+                        job.JobName && job.JobName.toLowerCase().replace(/\s+/g, '') === normalizedQuery
                     );
-                    setJobOpportunity(filteredJobs);
-                    if (filteredJobs.length === 0) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'No jobs found for the selected job name!',
-                        });
-                    }
-                } else {
-                    setJobOpportunity(res.data);
+                }
+
+                if (selectedJobType) {
+                    filteredJobs = filteredJobs.filter(job => job.JobType === selectedJobType);
+                }
+
+                if (salarySort === "low-to-high") {
+                    filteredJobs.sort((a, b) => a.Salary - b.Salary);
+                } else if (salarySort === "high-to-low") {
+                    filteredJobs.sort((a, b) => b.Salary - a.Salary);
+                }
+
+                setJobOpportunity(filteredJobs);
+
+                if (filteredJobs.length === 0 && (jobNameQuery || selectedJobType)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No jobs found for the selected criteria!',
+                    });
                 }
             })
             .catch(err => {
                 console.log(err);
             });
-    }, [jobNameQuery]);
+    }, [jobNameQuery, selectedJobType, salarySort]);
 
-    // Check admin or user role
     useEffect(() => {
         if (user?.email === "mdabusaid7068@gmail.com") {
             setAdminCheck(true);
@@ -50,12 +61,10 @@ const JobOpportunity = () => {
         }
     }, [user]);
 
-    // Handle ViewDetails
     const handleViewDetails = (jobId) => {
-        navigate(`/viewdetails/${jobId}`);
+        navigate(`/viewdetails/${jobId}`, { state: { from: `/jobopportunity` } });
     };
 
-    // Handle Delete
     const handleDelete = (JobID) => {
         Swal.fire({
             title: "Are you sure?",
@@ -83,22 +92,20 @@ const JobOpportunity = () => {
         });
     };
 
-    // Search form or search functionality
     const handleSearch = (e) => {
         e.preventDefault();
-
         const cleanJobName = selectedJob.toLowerCase().replace(/\s+/g, "");
-        console.log(cleanJobName)
         navigate(`/jobserach/${cleanJobName}`);
     };
 
     return (
         <div className="py-6 bg-gray-300">
-            <h2 className="text-3xl font-bold rounded-box grid h-16 place-items-center mb-2 w-[30%] mx-auto">All Job Opportunity Have</h2>
-            <p className="text-center py-4">Find the right job for your skills. Choose from the jobs listed below and apply to unlock new opportunities! 🚀</p>
-            <div>
-                {/* Search form */}
-                <form onSubmit={handleSearch} className="flex items-center w-[30%] justify-content-start pl-5 my-4">
+            <div className="bg-gradient-to-b bg-green-400 mx-4 rounded-lg">
+                <h2 className="text-3xl font-bold rounded-box grid h-16 place-items-center mb-2 w-[30%] mx-auto">All Job's Opportunity Have</h2>
+                <p className="text-center py-4">Find the right job for your skills. Choose from the jobs listed below and apply to unlock new opportunities! 🚀</p>
+            </div>
+            <div className="flex items-center w-[96%] justify-center pl-5 my-4 gap-16">
+                <form onSubmit={handleSearch} className="flex items-center w-[50%]">
                     <select
                         className="select select-bordered w-full flex-grow text-black"
                         value={selectedJob}
@@ -109,15 +116,42 @@ const JobOpportunity = () => {
                             <option key={role.value} value={role.value}>{role.label}</option>
                         ))}
                     </select>
-                    <button type="submit" className="btn btn-accent btn-square ml-2">
+                    <button type="submit" className="btn bg-green-400 btn-square ml-2">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </button>
                 </form>
+                <div className="w-[50%]">
+                    <select
+                        className="select select-bordered w-full flex-grow text-black"
+                        value={selectedJobType}
+                        onChange={(e) => setSelectedJobType(e.target.value)}
+                    >
+                        <option value="">Select Job Type</option>
+                        <option value="On-site">On-site</option>
+                        <option value="Remote">Remote</option>
+                        <option value="Hybrid">Hybrid</option>
+                        <option value="Full-time">Full-time</option>
+                        <option value="Internship">Internship</option>
+                    </select>
+                </div>
+                <div className="w-[50%]">
+                    <select
+                        className="select select-bordered w-full flex-grow text-black"
+                        value={salarySort}
+                        onChange={(e) => setSalarySort(e.target.value)}
+                    >
+                        <option value="">Sort by Salary</option>
+                        <option value="low-to-high">Low to High</option>
+                        <option value="high-to-low">High to Low</option>
+                    </select>
+                </div>
             </div>
-            <div className="mx-auto flex pt-2">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-4 ">
+
+
+            <div className="mx-auto pt-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mx-4 ">
                     {jobOpportunity.map((job) =>
                         <JobShow
                             key={job.id}
@@ -129,6 +163,7 @@ const JobOpportunity = () => {
                         />
                     )}
                 </div>
+
             </div>
         </div>
     );

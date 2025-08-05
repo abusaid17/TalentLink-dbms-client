@@ -9,11 +9,11 @@ import { jobRoles } from "../../jobRoles";
 
 const JobShow = ({ job, email, Admin, handleDelete, handleViewDetails }) => {
 
-    const isButtonDisabled = !(Admin || email === job?.userMail);
+    const isAuthorized = Admin || email === job?.userMail;
 
     return (
         <div>
-            <div key={job.id} className="card bg-base-200 w-full">
+            <div key={job.id} className="card bg-orange-200 w-full">
                 <div className="card-body">
                     <p className="font-bold">Company : {job.Company_Name}</p>
                     <p className="flex gap-2 items-center"><FaLocationDot /> {job.Location}</p>
@@ -22,12 +22,18 @@ const JobShow = ({ job, email, Admin, handleDelete, handleViewDetails }) => {
                     <p><span className="font-bold">About Job :</span> {job.AboutJob}</p>
                     <p className="flex gap-2 items-center"><TbCoinTakaFilled className="text-2xl" /> {job.Salary} BDT</p>
                 </div>
-                <Link className="text-right mr-4 mb-3" to={`/update_job/${job.JobID}`}>
-                    <button disabled={isButtonDisabled} className="btn btn-accent text-2xl"><FiEdit />
-                    </button></Link>
-                <div className="text-end mr-4 mb-2">
-                    <button disabled={isButtonDisabled} onClick={() => handleDelete(job.JobID)} className="btn btn-error text-2xl"><MdAutoDelete /></button>
-                </div>
+                {isAuthorized && (
+                    <div className="text-right mr-4 mb-3">
+                        <Link to={`/update_job/${job.JobID}`}>
+                            <button className="btn btn-accent text-2xl"><FiEdit /></button>
+                        </Link>
+                    </div>
+                )}
+                {isAuthorized && (
+                    <div className="text-end mr-4 mb-2">
+                        <button onClick={() => handleDelete(job.JobID)} className="btn btn-error text-2xl"><MdAutoDelete /></button>
+                    </div>
+                )}
                 {email && <button
                     onClick={() => handleViewDetails(job.JobID)}
                     className="btn btn-end btn-accent text-black text-lg font-bold">

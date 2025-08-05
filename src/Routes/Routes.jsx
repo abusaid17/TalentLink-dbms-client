@@ -15,6 +15,7 @@ import ShowJobForm from "../Components/ViewJobForm/ShowJobForm";
 import JobUpdate from "../Components/JobUpdate/JobUpdate";
 import University from "../Components/Univrsity/University";
 import ShowSearchData from "../Components/ShowSearchData/ShowSearchData";
+import About from "../Components/Home/About/About";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>
+      },
+      {
+        path: '/about',
+        element: <About></About>
       },
       {
         path: "/create",

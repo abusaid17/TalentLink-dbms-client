@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import axios from "axios";
 
@@ -18,17 +18,18 @@ const Navbar = () => {
 
     const navlinks =
         <>
-            <Link to="/"><li><a>Home</a></li></Link>
-            <Link to="/jobopportunity"><li><a>Jobs</a></li></Link>
-            <Link to="/addjob"><li><a>Post Job</a></li></Link>
+            <NavLink to="/"><li><a>Home</a></li></NavLink>
+            <NavLink to="/jobopportunity"><li><a>Jobs</a></li></NavLink>
+            <NavLink to='/about'><li><a>About Us</a></li></NavLink>
             {
                 user ?
                     <>
-                        <Link to="/profile"><li><a>Profile</a></li></Link>
+                        <NavLink to="/profile"><li><a>Profile</a></li></NavLink>
+                        <NavLink to="/addjob"><li><a>Post Job</a></li></NavLink>
                         {
                             userdata?.role === "Admin" ?
                                 <>
-                                    <Link to="/showuser"><li><a>Users</a></li></Link>
+                                    <NavLink to="/showuser"><li><a>Users</a></li></NavLink>
                                 </>
                                 :
                                 <>

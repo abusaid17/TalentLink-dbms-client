@@ -47,7 +47,7 @@ const JobUpdate = () => {
             .catch(error => {
                 console.error(error);
             })
-        // form.reset();
+        form.reset();
     }
     return (
         <div>
@@ -66,9 +66,14 @@ const JobUpdate = () => {
                             </div>
                             <div className="w-1/2">
                                 <label className="fieldset-label">Job Type</label>
-                                <input name="JobType" type="text" className="input w-full" placeholder="Job Type" defaultValue={valus.JobType
-                                }
-                                    required />
+                                <select name="JobType" className="input w-full" defaultValue={valus.JobType} required>
+                                    <option value="">Select Job Type</option>
+                                    <option value="On-site">On-site</option>
+                                    <option value="Remote">Remote</option>
+                                    <option value="Hybrid">Hybrid</option>
+                                    <option value="Full-time">Full-time</option>
+                                    <option value="Internship">Internship</option>
+                                </select>
                             </div>
                         </div>
                         {/* Second Row - Added Job Name */}

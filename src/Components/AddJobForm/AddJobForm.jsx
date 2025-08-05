@@ -61,6 +61,8 @@ const CreateUser = () => {
                                 <option value="On-site">On-site</option>
                                 <option value="Remote">Remote</option>
                                 <option value="Hybrid">Hybrid</option>
+                                <option value="Full-time">Full-time</option>
+                                <option value="Internship">Internship</option>
                             </select>
                         </div>
                     </div>

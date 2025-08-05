@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { FaLocationDot } from "react-icons/fa6";
 import { TbCoinTakaFilled } from "react-icons/tb";
@@ -12,6 +12,8 @@ const ViewDetails = () => {
     const [jobDetails, setJobDetails] = useState({});
     const { user } = useContext(AuthContext);
     const [applied, setApplied] = useState(false);
+    const location = useLocation();
+    const from = location.state?.from || "/jobopportunity";
 
     useEffect(() => {
         axios.get(`http://localhost:5001/jobopportunities/${jobId}`)
@@ -34,14 +36,18 @@ Thank you for considering my application. I look forward to the possibility of c
     };
 
     return (
-        <div className="py-4 bg-gray-200 min-h-screen">
-            <h1 className="text-4xl font-bold text-center my-8">Job Details</h1>
-            <div className="card bg-cyan-800 w-[80%] mx-auto text-white py-12 px-10">
+        <div className="py-4 min-h-screen">
+            <div className="text-center py-8 bg-green-400 mb-2 mx-8">
+                <h1 className="text-4xl font-bold text-center">Job Details</h1>
+                <p className="w-[60%] mx-auto">Explore full information about this opportunity, including job description, requirements, salary, location, and how to apply. Make sure your profile matches before applying to increase your chances of selection.</p>
+            </div>
+            <div className="card bg-cyan-800 w-[96%] mx-auto text-white py-12 px-10">
                 <div className="card-body">
                     <div className="flex justify-between">
                         <p className="font-bold">Company : {jobDetails.Company_Name}</p>
                         <p className="flex gap-2 items-center"><FaLocationDot /> {jobDetails.Location}</p>
                         <p>Time Duration : {jobDetails.TimeDuration}</p>
+                        <p>Job Type : {jobDetails.JobType}</p>
                     </div>
                     <p><span className='font-semibold'>👤 Role : </span> {jobDetails.Joining_Post}</p>
                     <p className='text-lg font-semibold'>💼 Position Title : {jobDetails.JobName}</p>
@@ -58,7 +64,7 @@ Thank you for considering my application. I look forward to the possibility of c
                 </div>
 
                 <div className="flex text-end pb-8 mx-8">
-                    <Link to="/jobopportunity"><button className="btn btn-secondary mx-4">Go Back </button></Link>
+                    <Link to={from}><button className="btn btn-secondary mx-4">Go Back </button></Link>
                     <button onClick={handleApplyNow} className="btn btn-success text-black" disabled={applied}>
                         {applied ? "Applied" : "Apply Now"}
                     </button>
@@ -67,5 +73,6 @@ Thank you for considering my application. I look forward to the possibility of c
         </div>
     );
 };
+
 
 export default ViewDetails;

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { jobRoles } from "../../jobRoles";
 import PopularServices from "../PopularServices/PopularServices";
 import axios from "axios";
+import AskQuestion from "./AskQuestion/AskQuestion";
 
 const Home = () => {
     const [selectedJob, setSelectedJob] = useState("");
@@ -14,30 +15,6 @@ const Home = () => {
         const cleanJobName = selectedJob.toLowerCase().replace(/\s+/g, "");
         console.log(cleanJobName)
         navigate(`/jobserach/${cleanJobName}`);
-
-        // const [searchData, setSearchData] = useState([]);
-        // console.log("show search data: ", searchData)
-
-        // if (!selectedJob) {
-        //     console.log("No job role selected.");
-        // } else {
-        //     console.log("Selected job role:", selectedJob);
-        // }
-
-        // axios.get(`http://localhost:5001/get_job_by_name/${jobName}`)
-        //     .then(res => {
-        //         console.log("Job found:", res.data);
-        //         setSearchData(res.data[0])
-        //     })
-        //     .catch(err => {
-        //         if (err.response?.status === 404) {
-        //             console.log("No job found");
-        //         } else {
-        //             console.error("Error fetching job:", err);
-        //         }
-        //     });
-
-
 
     };
 
@@ -76,6 +53,9 @@ const Home = () => {
                 </div>
             </div>
             <PopularServices></PopularServices>
+            <div className="my-8 ">
+                <AskQuestion></AskQuestion>
+            </div>
         </div>
     );
 };
