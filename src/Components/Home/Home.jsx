@@ -1,22 +1,22 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { jobRoles } from "../../jobRoles";
 import PopularServices from "../PopularServices/PopularServices";
 import axios from "axios";
-import AskQuestion from "./AskQuestion/AskQuestion";
+import AskQuestion from "../AskQuestion/AskQuestion";
 
 const Home = () => {
-    const [selectedJob, setSelectedJob] = useState("");
+    // const [selectedJob, setSelectedJob] = useState("");
     const navigate = useNavigate();
 
-    const handleSearch = (e) => {
-        e.preventDefault();
+    // const handleSearch = (e) => {
+    //     e.preventDefault();
 
-        const cleanJobName = selectedJob.toLowerCase().replace(/\s+/g, "");
-        console.log(cleanJobName)
-        navigate(`/jobserach/${cleanJobName}`);
+    //     const cleanJobName = selectedJob.toLowerCase().replace(/\s+/g, "");
+    //     console.log(cleanJobName)
+    //     navigate(`/jobsearch/${cleanJobName}`);
 
-    };
+    // };
 
     return (
         <div>
@@ -32,7 +32,7 @@ const Home = () => {
                         <p className="mb-5">
                             A job marketplace designed for newcomers. Connect with employers, find opportunities, and kickstart your career with ease.
                         </p>
-                        <form onSubmit={handleSearch} className="flex items-center w-full">
+                        {/* <form onSubmit={handleSearch} className="flex items-center w-full">
                             <select
                                 className="select select-bordered w-full flex-grow text-black"
                                 value={selectedJob}
@@ -48,7 +48,8 @@ const Home = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
                             </button>
-                        </form>
+                        </form> */}
+                        <Link to="/jobopportunity"><button className="btn btn-info text-uppercase font-semibold">FIND OPPORTUNITY</button></Link>
                     </div>
                 </div>
             </div>

@@ -18,8 +18,8 @@ const CreateUser = () => {
         const location = form.Location.value;
         const Joining_Post = form.Joining_Post.value;
         const salary = form.Salary.value;
-        const applyLastDate = form.Apply_Last_Date.value;
-        const joinDate = form.Join_Date.value;
+        const applyLastDate = new Date(form.Apply_Last_Date.value).toLocaleDateString('en-GB').replace(/\//g, '-');
+        const joinDate = new Date(form.Join_Date.value).toLocaleDateString('en-GB').replace(/\//g, '-');
         const timeDuration = form.TimeDuration.value;
         const numberOfOpenings = form.NumberOfOpenings.value;
         const aboutJob = form.AboutJob.value;

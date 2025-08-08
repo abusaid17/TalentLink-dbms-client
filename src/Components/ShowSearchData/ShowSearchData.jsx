@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { FaLocationDot } from "react-icons/fa6";
 import { TbCoinTakaFilled } from "react-icons/tb";
@@ -16,6 +16,7 @@ const ShowSearchData = () => {
     const [error, setError] = useState("");
     const { user } = useContext(AuthContext);
     const [adminCheck, setAdminCheck] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (user?.email === "mdabusaid7068@gmail.com") {
@@ -68,6 +69,10 @@ const ShowSearchData = () => {
         });
     };
 
+    const handleViewDetails = (jobId) => {
+        navigate(`/viewdetails/${jobId}`, { state: { from: `/jobserach/${jobName}` } });
+    };
+
     if (error) return <p className="text-red-500 text-center">{error}</p>;
     if (jobs.length === 0) return <p className="text-center font-semibold text-secondary text-2xl py-8">Matching Job Not Found... <br /> <br />
         <Link to='/jobopportunity'><button className="btn btn-secondary">Back</button></Link>
@@ -75,8 +80,8 @@ const ShowSearchData = () => {
 
     return (
         <div className="pb-8">
-            <div className="bg-gradient-to-b bg-green-400 mx-4 rounded-lg">
-                <h2 className="text-3xl font-bold rounded-box grid h-16 place-items-center mb-2 w-[30%] mx-auto">Your Searched Job</h2>
+            <div className="bg-gradient-to-b bg-green-400 rounded-b-2xl">
+                <h2 className="text-3xl font-bold rounded-box grid h-16 place-items-center mx-auto">Your Searched Job</h2>
                 <p className="text-center py-4">Find the right job for your skills. Choose from the jobs listed below and apply to unlock new opportunities! 🚀</p>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-4 mt-8">
@@ -105,15 +110,18 @@ const ShowSearchData = () => {
                                 </div>
                             )}
                             <div className="flex items-center gap-2 pt-6">
-                                <Link to='/jobopportunity'><button className="btn btn-error">Back</button></Link>
-                                {user && <Link to={`/viewdetails/${job.JobID}`} state={{ from: `/jobserach/${jobName}` }}><button
-                                    className="btn btn-end btn-accent">
+                                <button
+                                    onClick={() => handleViewDetails(job.JobID)}
+                                    className="btn btn-end bg-green-400">
                                     View Details
-                                </button></Link>}
+                                </button>
                             </div>
                         </div>
                     );
                 })}
+            </div>
+            <div className="text-center mt-8">
+                <Link to='/jobopportunity'><button className="btn btn-error">Back</button></Link>
             </div>
         </div>
     );

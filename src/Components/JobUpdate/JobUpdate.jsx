@@ -6,12 +6,16 @@ import { toast, ToastContainer } from "react-toastify";
 const JobUpdate = () => {
     const { JobID } = useParams();
     const navigate = useNavigate()
-    const [valus, setValues] = useState([]);
+    const [valus, setValues] = useState({});
 
     useEffect(() => {
         axios.get(`http://localhost:5001/get_job/${JobID}`)
             .then(res => {
-                setValues(res.data);
+                const data = res.data;
+                // Format dates for input[type="date"]
+                data.Apply_Last_Date = new Date(data.Apply_Last_Date).toISOString().split('T')[0];
+                data.JoinDate = new Date(data.JoinDate).toISOString().split('T')[0];
+                setValues(data);
             })
             .catch(error => {
                 console.log(error);
@@ -28,8 +32,8 @@ const JobUpdate = () => {
             Location: form.Location.value,
             Joining_Post: form.Joining_Post.value,  // Change to match "position" in DB
             Salary: form.Salary.value,
-            Apply_Last_Date: form.Apply_Last_Date.value,
-            JoinDate: form.JoinDate.value,
+            Apply_Last_Date: new Date(form.Apply_Last_Date.value).toLocaleDateString('en-GB').replace(/\//g, '-'),
+            JoinDate: new Date(form.JoinDate.value).toLocaleDateString('en-GB').replace(/\//g, '-'),
             TimeDuration: form.TimeDuration.value,
             AboutJob: form.AboutJob.value,
             RequiredSkills: form.RequiredSkills.value,
@@ -106,12 +110,12 @@ const JobUpdate = () => {
                         <div className="flex gap-4">
                             <div className="w-1/2">
                                 <label className="fieldset-label">Apply Last Date</label>
-                                <input name="Apply_Last_Date" type="text" className="input w-full" defaultValue={valus.Apply_Last_Date}
+                                <input name="Apply_Last_Date" type="date" className="input w-full" defaultValue={valus.Apply_Last_Date}
                                     required />
                             </div>
                             <div className="w-1/2">
                                 <label className="fieldset-label">Join Date</label>
-                                <input name="JoinDate" type="text" className="input w-full" defaultValue={valus.JoinDate}
+                                <input name="JoinDate" type="date" className="input w-full" defaultValue={valus.JoinDate}
                                     required />
                             </div>
                         </div>

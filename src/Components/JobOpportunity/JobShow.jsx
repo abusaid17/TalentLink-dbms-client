@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FaLocationDot } from 'react-icons/fa6';
 import { FiEdit } from 'react-icons/fi';
 import { MdAutoDelete } from 'react-icons/md';
 import { TbCoinTakaFilled } from 'react-icons/tb';
-import { Link, useNavigate } from 'react-router-dom';
-import { jobRoles } from "../../jobRoles";
-
+import { Link } from 'react-router-dom';
 
 const JobShow = ({ job, email, Admin, handleDelete, handleViewDetails }) => {
-
     const isAuthorized = Admin || email === job?.userMail;
 
     return (
@@ -34,11 +31,11 @@ const JobShow = ({ job, email, Admin, handleDelete, handleViewDetails }) => {
                         <button onClick={() => handleDelete(job.JobID)} className="btn btn-error text-2xl"><MdAutoDelete /></button>
                     </div>
                 )}
-                {email && <button
+                <button
                     onClick={() => handleViewDetails(job.JobID)}
                     className="btn btn-end btn-accent text-black text-lg font-bold">
                     View Details
-                </button>}
+                </button>
             </div>
         </div>
     );

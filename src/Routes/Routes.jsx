@@ -13,9 +13,9 @@ import ViewDetails from "../Components/ViewJobDetails/ViewDetails";
 import AddJobForm from "../Components/AddJobForm/AddJobForm";
 import ShowJobForm from "../Components/ViewJobForm/ShowJobForm";
 import JobUpdate from "../Components/JobUpdate/JobUpdate";
-import University from "../Components/Univrsity/University";
 import ShowSearchData from "../Components/ShowSearchData/ShowSearchData";
-import About from "../Components/Home/About/About";
+import AskQuestion from "../Components/AskQuestion/AskQuestion";
+import About from "../Components/About/About";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -82,12 +82,12 @@ export const router = createBrowserRouter([
         element: <JobUpdate></JobUpdate>
       },
       {
-        path: "/university",
-        element: <University></University>
+        path: "/jobsearch/:jobName",
+        element: <ShowSearchData></ShowSearchData>
       },
       {
-        path: "/jobserach/:jobName",
-        element: <ShowSearchData></ShowSearchData>
+        path: "/askquestion",
+        element: <AskQuestion></AskQuestion>
       }
     ]
   },

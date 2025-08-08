@@ -9,7 +9,7 @@ const PopularServices = () => {
     return (
         <>
             <div className="flex max-w-96 text-center mx-auto flex-col mt-8">
-                <div className="card bg-base-300 rounded-box grid h-16 text-3xl font-bold  place-items-center">Our Premium Course</div>
+                <div className="card bg-base-300 rounded-box grid h-16 text-3xl font-bold  place-items-center">Our Premium Services</div>
                 <div className="divider"></div>
             </div>
             <div>
