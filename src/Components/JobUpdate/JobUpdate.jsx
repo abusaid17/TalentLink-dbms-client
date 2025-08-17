@@ -32,8 +32,8 @@ const JobUpdate = () => {
             Location: form.Location.value,
             Joining_Post: form.Joining_Post.value,  // Change to match "position" in DB
             Salary: form.Salary.value,
-            Apply_Last_Date: new Date(form.Apply_Last_Date.value).toLocaleDateString('en-GB').replace(/\//g, '-'),
-            JoinDate: new Date(form.JoinDate.value).toLocaleDateString('en-GB').replace(/\//g, '-'),
+            Apply_Last_Date: form.Apply_Last_Date.value,
+            JoinDate: form.JoinDate.value,
             TimeDuration: form.TimeDuration.value,
             AboutJob: form.AboutJob.value,
             RequiredSkills: form.RequiredSkills.value,

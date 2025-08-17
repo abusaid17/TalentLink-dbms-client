@@ -18,8 +18,8 @@ const CreateUser = () => {
         const location = form.Location.value;
         const Joining_Post = form.Joining_Post.value;
         const salary = form.Salary.value;
-        const applyLastDate = new Date(form.Apply_Last_Date.value).toLocaleDateString('en-GB').replace(/\//g, '-');
-        const joinDate = new Date(form.Join_Date.value).toLocaleDateString('en-GB').replace(/\//g, '-');
+        const applyLastDate = form.Apply_Last_Date.value;
+        const joinDate = form.Join_Date.value;
         const timeDuration = form.TimeDuration.value;
         const numberOfOpenings = form.NumberOfOpenings.value;
         const aboutJob = form.AboutJob.value;
@@ -130,7 +130,7 @@ const CreateUser = () => {
                             <textarea name="AboutCompany" className="textarea w-full h-12" placeholder="Describe the company..." required></textarea>
                         </div>
                     </div>
-                    <button className="btn btn-success mt-4 w-full text-lg">Offer New Job</button>
+                    <button className="btn btn-success mt-4 w-full text-lg">Post New Job</button>
                 </form>
             </div>
             <ToastContainer></ToastContainer>

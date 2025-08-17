@@ -6,15 +6,15 @@ import axios from "axios";
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext)
     const [userdata, setUserData] = useState([])
-    useEffect(() => {
-        axios.get(`http://localhost:5001/get_user/${user?.email}`)
-            .then((res) => {
-                setUserData(res.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }, [user])
+    // useEffect(() => {
+    //     axios.get(`http://localhost:5001/get_user/${user?.email}`)
+    //         .then((res) => {
+    //             setUserData(res.data)
+    //         })
+    //         .catch(err => {
+    //             // console.log(err)
+    //         })
+    // }, [user])
 
     const navlinks =
         <>
@@ -46,7 +46,7 @@ const Navbar = () => {
 
         </>
     return (
-        <div className="navbar bg-base-300">
+        <div className="navbar bg-success">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghos lg:hidden">
@@ -78,7 +78,7 @@ const Navbar = () => {
             </div>
             <div className="navbar-end gap-2">
                 {user ?
-                    <Link onClick={() => logOut()} ><a className="btn btn-error text-lg">Sign Out</a></Link>
+                    <Link onClick={() => logOut()} ><button className="btn btn-error text-lg">Sign Out</button></Link>
                     : <>
                         <Link to="/login"><button className="btn btn-secondary">Sign In</button></Link>
                         <Link to="/register"><button className="btn btn-primary">Sign Up</button></Link>

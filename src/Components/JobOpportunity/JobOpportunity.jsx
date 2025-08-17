@@ -102,8 +102,8 @@ const JobOpportunity = () => {
     };
 
     return (
-        <div className=" bg-gray-300">
-            <div className="bg-gradient-to-b bg-green-400 rounded-b-2xl">
+        <div className="pb-4 bg-gray-300">
+            <div className="bg-gradient-to-b bg-neutral-300 rounded-b-2xl ">
                 <h2 className="text-4xl font-bold rounded-box grid h-16 place-items-center mx-auto">All Job's Opportunity Have</h2>
                 <p className="text-center py-4">Find the right job for your skills. Choose from the jobs listed below and apply to unlock new opportunities! 🚀</p>
             </div>

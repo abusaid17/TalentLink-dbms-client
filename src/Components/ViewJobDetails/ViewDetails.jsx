@@ -37,13 +37,13 @@ const ViewDetails = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Please attach your resume or CV before applying!',
+                text: 'Please attach your resume before applying!',
             });
             return;
         }
 
         const subject = `Application for ${jobDetails.JobName}`;
-        const body = `Dear ${jobDetails.Company_Name},\n\nI am writing to apply for the ${jobDetails.JobName} position.\n\nMy email is: ${user.email}\n\nI am writing to express my interest in the Front-End Developer position at Islami Bank. With a strong foundation in modern web technologies including HTML, CSS, JavaScript, React.js, and responsive design principles, I am confident in my ability to contribute to your team and enhance the user experience of your digital platforms.\n\nIn my recent role, I have developed and optimized user-facing features, collaborated closely with UI/UX teams, and ensured cross-browser compatibility and performance optimization. I am particularly drawn to Islami Bank’s commitment to innovation and digital transformation, and I am excited about the opportunity to be part of that mission.\n\nPlease find my resume attached for your review. I would welcome the opportunity to further discuss how my background, skills, and enthusiasm align with the goals of your development team.\n\nThank you for considering my application. I look forward to the possibility of contributing to Islami Bank’s ongoing success.\n\nSincerely,\n${user.displayName || user.email}\n\n--- Please remember to attach your resume before sending ---`;
+        const body = `Dear ${jobDetails.Company_Name},\n\nI am writing to apply for the ${jobDetails.JobName} position.\n\nMy email is: ${user.email}\n\nI am writing to express my interest in the Front-End Developer position at Islami Bank. With a strong foundation in modern web technologies including HTML, CSS, JavaScript, React.js, and responsive design principles, I am confident in my ability to contribute to your team and enhance the user experience of your digital platforms.\n\nIn my recent role, I have developed and optimized user-facing features, collaborated closely with UI/UX teams, and ensured cross-browser compatibility and performance optimization. I am particularly drawn to Islami Bank’s commitment to innovation and digital transformation, and I am excited about the opportunity to be part of that mission.\n\nPlease find my resume attached for your review. I would welcome the opportunity to further discuss how my background, skills, and enthusiasm align with the goals of your development team.\n\nThank you for considering my application. I look forward to the possibility of contributing to Islami Bank’s ongoing success.\n\nSincerely,\n${user.displayName || user.email}\n\n--- Please remember to attach your resume before sending Mail ---`;
         const mailtoLink = `mailto:${jobDetails.userMail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
         window.location.href = mailtoLink;
@@ -56,8 +56,8 @@ const ViewDetails = () => {
     };
 
     return (
-        <div className="py-4 min-h-screen">
-            <div className="text-center py-8 bg-green-400 mb-2 rounded-lg px-0 w-[96%] mx-auto">
+        <div className="py-4 min-h-screen bg-gray-300">
+            <div className="text-center py-4  mb-2 rounded-lg px-0 w-[96%] mx-auto">
                 <h1 className="text-4xl font-bold text-center pb-2">Job Details</h1>
                 <p className="px-4">Explore full information about this opportunity, including job description, requirements, salary, location, <br /> and how to apply. Make sure your profile matches before applying to increase your chances of selection.</p>
             </div>
