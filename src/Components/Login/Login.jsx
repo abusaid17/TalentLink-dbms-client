@@ -74,7 +74,7 @@ const Login = () => {
         try {
             const userCredential = await signInUser(email, password); // Firebase
             Swal.fire("Sign In Successful", "", "success");
-            navigate('/profile');
+            navigate('/jobopportunity');
             form.reset();
         } catch (err) {
             console.error("Login error:", err);

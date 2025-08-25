@@ -12,6 +12,7 @@ import { initializeApp } from "firebase/app";
 //   messagingSenderId: "562979755497",
 //   appId: "1:562979755497:web:7b1d9ebd694bd6660a6778"
 // };
+console.log(import.meta.env.VITE_APIKEY)
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APIKEY,
   authDomain: import.meta.env.VITE_AUTHDOMAIN,
