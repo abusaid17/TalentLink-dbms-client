@@ -9,61 +9,91 @@ const Login = () => {
     const { GoogleLogin, signInUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    // const handleSignIn = async (e) => {
+    //     e.preventDefault();
+    //     const form = e.target;
+    //     const email = form.email.value;
+    //     const password = form.password.value;
+    //     // const loginInfo = { email, password }
+    //     signInUser(email, password)
+    //         .then(async res => {
+    //             if (res) {
+    //                 try {
+    //                     const response = await fetch("http://localhost:5001/login", {
+    //                         method: "POST",
+    //                         headers: {
+    //                             "Content-Type": "application/json",
+    //                         },
+    //                         body: JSON.stringify({ email, password }),
+    //                     });
+    //                     const data = await response.json();
+    //                     if (res) {
+
+    //                         Swal.fire({
+    //                             title: "Sign In Successful",
+    //                             icon: "success",
+    //                             draggable: true
+    //                         });
+    //                         // // Store token in localStorage
+    //                         // localStorage.setItem("token", data.token);
+    //                         // localStorage.setItem("user", JSON.stringify(data.user));
+
+    //                         navigate('/');
+
+    //                         form.reset(); // Clear the form after successful login
+    //                     }
+
+    //                 } catch (error) {
+    //                     console.error("Login error:", error);
+    //                     Swal.fire({
+    //                         icon: "error",
+    //                         title: "Oops...",
+    //                         text: "Server Error. Try again later!",
+    //                     });
+    //                 }
+    //             }
+    //         })
+    //         .catch(err => {
+    //             console.log("login: ", err)
+    //         })
+
+    // };
+    // Google login
+
     const handleSignIn = async (e) => {
         e.preventDefault();
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        // const loginInfo = { email, password }
-        signInUser(email, password)
-            .then(async res => {
-                if (res) {
-                    try {
-                        // const response = await fetch("http://localhost:5001/login", {
-                        //     method: "POST",
-                        //     headers: {
-                        //         "Content-Type": "application/json",
-                        //     },
-                        //     body: JSON.stringify({ email, password }),
-                        // });
-                        // const data = await response.json();
-                        if (res) {
 
-                            Swal.fire({
-                                title: "Sign In Successful",
-                                icon: "success",
-                                draggable: true
-                            });
-                            // // Store token in localStorage
-                            // localStorage.setItem("token", data.token);
-                            // localStorage.setItem("user", JSON.stringify(data.user));
+        if (!email || !password) {
+            Swal.fire("Error", "Email and Password are required", "error");
+            return;
+        }
 
-                            navigate('/');
-
-                            form.reset(); // Clear the form after successful login
-                        }
-
-                    } catch (error) {
-                        console.error("Login error:", error);
-                        Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "Server Error. Try again later!",
-                        });
-                    }
-                }
-            })
-            .catch(err => {
-                console.log("login: ", err)
-            })
-
+        try {
+            const userCredential = await signInUser(email, password); // Firebase
+            Swal.fire("Sign In Successful", "", "success");
+            navigate('/profile');
+            form.reset();
+        } catch (err) {
+            console.error("Login error:", err);
+            Swal.fire({
+                icon: "error",
+                title: "Login Failed",
+                text: err.message,
+            });
+        }
     };
-    // Google login
+
+
     const handleGoogleSignIn = () => {
         GoogleLogin()
             .then(result => {
                 // Swal.fire("User Logged In Successfully");
-                navigate("/profile")
+                // navigate("/profile")
+                Swal.fire("Sign In Successful", "", "success");
+                navigate('/profile');
             })
             .catch(error => {
                 console.log(error.message);

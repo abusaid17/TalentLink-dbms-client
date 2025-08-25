@@ -7,7 +7,7 @@ import { FcRating } from 'react-icons/fc';
 const Profile = () => {
     // const [user, setUser] = useState(null);
     const { user } = useContext(AuthContext)
-    console.log(user)
+    // console.log(user)
 
     const [userdata, setUserData] = useState([])
 

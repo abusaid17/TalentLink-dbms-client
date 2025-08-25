@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     // google Provider
-    
+
     const googleProvider = new GoogleAuthProvider()
 
     // For Create User Or for register
@@ -35,11 +35,11 @@ const AuthProvider = ({ children }) => {
 
 
     // for log Out 
-    const logOut = () =>{
+    const logOut = () => {
         setLoading(true);
         return signOut(auth);
     }
-    
+
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
@@ -60,7 +60,7 @@ const AuthProvider = ({ children }) => {
         signInUser,
         logOut,
         GoogleLogin,
-        
+
     }
 
     return (
